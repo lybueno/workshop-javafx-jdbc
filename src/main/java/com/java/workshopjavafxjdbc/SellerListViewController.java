@@ -20,6 +20,7 @@ import model.services.SellerService;
 import util.Alerts;
 import util.Utils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -101,27 +102,27 @@ public class SellerListViewController implements Initializable, DataChangeListen
     }
 
     private void createDialogForm(Seller obj, String absoluteName, Stage parentStage){
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//            Pane pane = loader.load();
-//
-//            SellerFormViewController controller = loader.getController();
-//            controller.setSeller(obj);
-//            controller.setSellerService(new SellerService());
-//            controller.subscribeDataChangeListener(this);
-//            controller.updateFormData();
-//
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("Enter Seller data");
-//            dialogStage.setScene(new Scene(pane));
-//            dialogStage.setResizable(false);
-//            dialogStage.initOwner(parentStage);
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.showAndWait();
-//
-//        } catch (IOException e){
-//            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            Pane pane = loader.load();
+
+            SellerFormViewController controller = loader.getController();
+            controller.setSeller(obj);
+            controller.setSellerService(new SellerService());
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Enter Seller data");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+        } catch (IOException e){
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @Override
@@ -141,7 +142,7 @@ public class SellerListViewController implements Initializable, DataChangeListen
                     return;
                 }
                 setGraphic(button);
-                //button.setOnAction(event -> createDialogForm(obj, "Seller-form-view.fxml",Utils.currentStage(event)));
+                button.setOnAction(event -> createDialogForm(obj, "seller-form-view.fxml",Utils.currentStage(event)));
             }
         });
     }
