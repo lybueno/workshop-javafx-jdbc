@@ -54,7 +54,7 @@ public class SellerDaoJDBC implements SellerDao {
     }
 
     @Override
-    public void udpate(Seller obj) {
+    public void update(Seller obj) {
         PreparedStatement st = null;
         try{
             st = conn.prepareStatement("UPDATE seller SET Name = ?, Email = ?, BirthDate = ?, " +
