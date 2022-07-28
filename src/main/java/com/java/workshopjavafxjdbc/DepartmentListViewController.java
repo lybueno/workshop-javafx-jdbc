@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import listeners.DataChangeListener;
 import model.entities.Department;
 import model.services.DepartmentService;
 import util.Alerts;
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DepartmentListViewController implements Initializable {
+public class DepartmentListViewController implements Initializable, DataChangeListener {
 
     private DepartmentService service;
 
@@ -83,7 +84,8 @@ public class DepartmentListViewController implements Initializable {
 
             DepartmentFormViewController controller = loader.getController();
             controller.setDepartment(obj);
-            controller.setDepartmentService(service);
+            controller.setDepartmentService(new DepartmentService());
+            controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
             Stage dialogStage = new Stage();
@@ -97,5 +99,10 @@ public class DepartmentListViewController implements Initializable {
         } catch (IOException e){
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        updateTableView();
     }
 }
